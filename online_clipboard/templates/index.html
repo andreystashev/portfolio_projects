@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Заметки</title>
+</head>
+<body>
+    <h1>Заметки</h1>
+
+    <form action="/add_note" method="post">
+        <label for="note">Добавить заметку:</label>
+        <input type="text" id="note" name="note" required>
+        <button type="submit">Добавить</button>
+    </form>
+
+    <h2>Список заметок:</h2>
+
+    {% for note in notes %}
+        <p>
+            {{ note }}
+            <a href="{{ url_for('delete_note', note_index=loop.index0) }}" onclick="return confirm('Вы уверены?')">Удалить</a>
+        </p>
+    {% endfor %}
+
+</body>
+</html>
