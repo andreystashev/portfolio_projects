@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Новости</title>
+</head>
+<body>
+
+{% if user.is_authenticated %}
+    Добро пожаловать, {{ user.username }} | <a href="{% url 'logout' %}">Logout</a>
+{% else %}
+    <a href="{% url 'login' %}">Login</a>
+{% endif %}
+
+<p><a href="{% url 'AddNewsView' %}">Добавить новость</a></p>
+
+<h1>Новости</h1>
+
+{% if newsitems %}
+    <ul>
+        {% for newsitem in newsitems %}
+            {% if newsitem.is_active %}
+                <li>
+                    <h4><a href="{% url 'NewsDetailView' newsitem.pk %}">{{ newsitem.title }}</a></h4>
+                    <p><a href="{% url 'EditNewsView' newsitem.pk %}">Редактировать новость</a></p>                    <p>
+                        {{ newsitem.description }}
+                    </p>
+                    <p>
+                        Дата создания: {{ newsitem.created_at }}
+                    </p>
+                    <p>
+                        Дата изменения: {{ newsitem.edit_at }}
+                    </p>
+
+                </li>
+            {% endif %}
+        {% endfor %}
+    </ul>
+{% else %}
+    <p>Новостей нет</p>
+{% endif %}
+
+</body>
+</html>
