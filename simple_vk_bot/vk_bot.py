@@ -1,7 +1,10 @@
-import vk_api, random
+import vk_api, random, os
+from dotenv import load_dotenv
 
-GROUP_ID = 200421873
-TOKEN = '9aa5a842c8732d66f400bad709e212518d693ff5e3e9b6e0d89a81b9739c7e0cc41022ad8cc477e1ce94c'
+load_dotenv()
+
+GROUP_ID = int(os.getenv('VK_GROUP_ID'))
+TOKEN = os.getenv('VK_API_TOKEN')
 
 vk = vk_api.VkApi(token=TOKEN)
 vk._auth_token()

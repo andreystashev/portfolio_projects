@@ -15,7 +15,6 @@ def random_number():
             random = num1, num2, num3, num4
             final_number.extend(random)
             break
-    # print(int(random[0]), int(random[1]), int(random[2]), int(random[3]))
 
 
 random_number()

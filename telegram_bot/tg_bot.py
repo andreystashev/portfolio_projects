@@ -9,7 +9,7 @@ def filter(text):
     return ''.join(text)
 
 
-def match(text, example):  # "прощяй!" === "Прощай" ??
+def match(text, example):
     text = filter(text)
     # example = example
 
@@ -64,7 +64,7 @@ from sklearn.feature_extraction.text import CountVectorizer
 
 # Пробуем CountVectorizer
 count_vectorizer = CountVectorizer()  # Настройки
-count_vectorizer.fit(X_examples)  # Подгтовка (обучение) векторайзера
+count_vectorizer.fit(X_examples)  # Подготовка (обучение) векторайзера
 
 X = count_vectorizer.transform(X_examples)  # Применение векторайзера
 from sklearn.linear_model import LogisticRegression
@@ -96,52 +96,34 @@ def get_intent_predictive_model(text):
 
 import pickle
 
-# Как сохранить в файл?
-# pickle.dump(lin_svc, open("lin_svc.model", "wb"))
-# pickle.dump(tfidf_vectorizer, open("tfidf_vectorizer.model", "wb"))
-# ! pip install python-telegram-bot --upgrade
 from telegram import Update
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, CallbackContext
 
 
 def start(update: Update, context: CallbackContext) -> None:
-    """Send a message when the command /start is issued."""
-    update.message.reply_text('Hi!')
+    update.message.reply_text('Привет!')
 
 
 def help_command(update: Update, context: CallbackContext) -> None:
-    """Send a message when the command /help is issued."""
-    update.message.reply_text('I\'m very intellegent AI creature!')
+    update.message.reply_text('Я всего лишь бот.')
 
 
 def echo(update: Update, context: CallbackContext) -> None:
-    """Echo the user message."""
     answer = bot(update.message.text)
     update.message.reply_text(answer)
 
 
 def main():
-    """Start the bot."""
-    # Create the Updater and pass it your bot's token.
-    # Make sure to set use_context=True to use the new context based callbacks
-    # Post version 12 this will no longer be necessary
     updater = Updater("1478465962:AAHQlFpiNzW378e-1Jr24n7_5HA8E15BvYU", use_context=True)
 
-    # Get the dispatcher to register handlers
     dispatcher = updater.dispatcher
 
-    # on different commands - answer in Telegram
     dispatcher.add_handler(CommandHandler("start", start))
     dispatcher.add_handler(CommandHandler("help", help_command))
 
-    # on noncommand i.e message - echo the message on Telegram
     dispatcher.add_handler(MessageHandler(Filters.text & ~Filters.command, echo))
 
-    # Start the Bot
     updater.start_polling()
 
-    # Run the bot until you press Ctrl-C or the process receives SIGINT,
-    # SIGTERM or SIGABRT. This should be used most of the time, since
-    # start_polling() is non-blocking and will stop the bot gracefully.
     updater.idle()
 main()

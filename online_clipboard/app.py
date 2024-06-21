@@ -4,7 +4,6 @@ from flask import Flask, render_template, request, redirect
 
 app = Flask(__name__)
 
-# Путь к файлу для хранения заметок
 notes_file_path = 'notes.txt'
 if not os.path.exists(notes_file_path):
     with open(notes_file_path, 'w') as f:
@@ -14,7 +13,6 @@ if not os.path.exists(notes_file_path):
 def read_notes_from_file():
     with open(notes_file_path, 'r') as f:
         notes = f.read().split('\n')
-    # Очищаем пустые строки
     return [note for note in notes if note]
 
 
